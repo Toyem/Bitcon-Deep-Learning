@@ -19,7 +19,7 @@ from datetime import timedelta
     #------------------------------------------------------#
 py3 = sys.version_info[0] > 2 #creates boolean value for test that Python major version > 2
 if py3:
-  file_name = input("Please enter your file name: ") + ".csv"
+  file_name = "/database/" + input("Please enter your file name: ") + ".csv"
 else:
   sys.exit("  Error : this script works with pyhton 3.\n  Please update your version of python.")
 
