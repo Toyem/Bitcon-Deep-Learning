@@ -19,13 +19,13 @@ from datetime import timedelta
     #------------------------------------------------------#
 py3 = sys.version_info[0] > 2 #creates boolean value for test that Python major version > 2
 if py3:
-  file_name = "/database/" + input("Please enter your file name: ") + ".csv"
+  file_name = "database/" + input("Please enter your file name: ") + ".csv"
 else:
   sys.exit("  Error : this script works with pyhton 3.\n  Please update your version of python.")
 
-file_byte = open("bitcoin-historical-data/coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv","r")
-reader_byte = csv.reader(file_byte)
-writer = csv.writer(open(file_name, "w"))
+file_byte = "bitcoin-historical-data/coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv"
+reader_byte = csv.reader(open(file_byte,"r"))
+writer = csv.writer(open(file_name,"w"))
 
 total_row = 2099761
 '''
@@ -52,7 +52,7 @@ for row in reader_byte :
     number_row +=1
     dt_object = datetime.fromtimestamp(int(row[0]))
     if last_sample <= dt_object :
-        last_sample = dt_object + timedelta(minutes=5)
+        last_sample = dt_object + timedelta(days=1)
         for data in row :
             if data == 'NaN' :
                 row_validity = False
