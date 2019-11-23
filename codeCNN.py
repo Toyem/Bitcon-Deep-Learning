@@ -19,7 +19,9 @@ import sys
 
 # date-time parsing function for loading the dataset
 def parser(x):
-	return datetime.strptime(x, '%d/%m/%y %h:%m:%s')
+	return datetime.strptime(x, '%m/%d/%y %H:%M:%S')
+	#return datetime.strptime('190'+x, '%Y-%m')
+
 
 # frame a sequence as a supervised learning problem
 def timeseries_to_supervised(data, lag=1):
@@ -85,9 +87,23 @@ def forecast_lstm(model, batch_size, X):
 
 # load dataset
 series = read_csv('database/file_1day.csv', header=0, parse_dates=[0], index_col=0, squeeze=True, date_parser=parser)
+#series = read_csv('Shampoo/shampoo-sales.csv', header=0, parse_dates=[0], index_col=0, squeeze=True, date_parser=parser)
 
+def extract_one_row(series, index):
+	new_serie = []
+	for i in range(len(series)):
+		new_serie.append(series[i][index])
+	return new_serie
+
+# choose a type of dataset
+print("#################################")
+nb_dataset = input("Witch dataset do you want to train ?\nOpen : 1\nHigh : 2\nLow : 3\nClose : 4\nVolume_(BTC) : 5\nVolume_(Currency) : 6\nWeighted_Price : 7\n\nYour choice :")
+if nb_dataset < 1 or nb_dataset > 7 :
+	sys.exit("  Error : type a number between 1 and 7")
+print("Creation of the dataset")
 # transform data to be stationary
-raw_values = series.values
+raw_values = extract_one_row(series.values, nb_dataset)
+#print(series)
 diff_values = difference(raw_values, 1)
 
 # transform data to be supervised learning
@@ -101,7 +117,7 @@ train, test = supervised_values[0:-12], supervised_values[-12:]
 scaler, train_scaled, test_scaled = scale(train, test)
 
 # fit the model
-lstm_model = fit_lstm(train_scaled, 1, 1000, 4)
+lstm_model = fit_lstm(train_scaled, 1, 100, 4)
 print("\nSuccessfully created the Model")
 # forecast the entire training dataset to build up state for forecasting
 train_reshaped = train_scaled[:, 0].reshape(len(train_scaled), 1, 1)

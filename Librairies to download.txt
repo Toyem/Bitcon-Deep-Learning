@@ -1,0 +1,4 @@
+pip install pandas
+pip install sklearn
+pip install keras
+pip install matplotlib
