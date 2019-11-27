@@ -97,11 +97,12 @@ def extract_one_row(series, index):
 
 # choose a type of dataset
 print("#################################")
-nb_dataset = input("Witch dataset do you want to train ?\nOpen : 1\nHigh : 2\nLow : 3\nClose : 4\nVolume_(BTC) : 5\nVolume_(Currency) : 6\nWeighted_Price : 7\n\nYour choice :")
+nb_dataset = input("Witch dataset do you want to train ?\n\033[4mOpen :\033[0m 1\n\033[4mHigh :\033[0m 2\n\033[4mLow :\033[0m 3\n\033[4mClose :\033[0m 4\n\033[4mVolume_(BTC) :\033[0m 5\n\033[4mVolume_(Currency) :\033[0m 6\n\033[4mWeighted_Price :\033[0m 7\n\nYour choice :")
 if nb_dataset < 1 or nb_dataset > 7 :
 	sys.exit("  Error : type a number between 1 and 7")
 print("Creation of the dataset")
 # transform data to be stationary
+"""
 raw_values = extract_one_row(series.values, nb_dataset)
 #print(series)
 diff_values = difference(raw_values, 1)
@@ -145,3 +146,4 @@ print('Test RMSE: %.3f' % rmse)
 pyplot.plot(raw_values[-12:])
 pyplot.plot(predictions)
 pyplot.show()
+"""
